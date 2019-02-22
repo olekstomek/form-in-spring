@@ -1,0 +1,4 @@
+ function goToPreviousPage()
+ {
+  history.back()
+ }

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    <!--/*/ <th:block th:include="fragments/notification :: head"></th:block> /*/-->
+    <script type='text/javascript' src='../js/addOrDeleteRow.js'></script>
+</head>
+<body class="container">
+<h1>Create</h1>
+<form class="form-horizontal" th:action="@{/update}" method="post" th:object="${client}">
+    <div class="row">
+        <div class="col-lg-6">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="input-group col-xs-8">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" th:field="*{name}"/> <br />
+                <span class="formError" th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}">Invalid name</span>
+            </div>
+            <div class="input-group col-xs-8">
+                <input type="checkbox" id="isCompany" name="isCompany" th:checked="*{isCompany}"
+                       th:field="*{isCompany}"/>
+                <label for="isCompany">&nbsp;Is Company?</label>
+            </div>
+
+            <div id="showOrHideRegNo" class="input-group col-xs-8">
+                <label for="RegNo">Reg No</label>
+                <input class="form-control" type="text" id="RegNo" th:field="*{regNo}" />  <!-- : 'readonly=readonly'-->
+            </div>
+
+            <div class="input-group col-xs-8">
+                <label for="VatID">Vat ID</label>
+                <input class="form-control" type="text" id="VatID" th:field="*{vatId}"/>
+                <span class="formError" th:if="${#fields.hasErrors('vatId')}"
+                      th:errors="*{vatId}">Invalid Vat ID</span>
+            </div>
+            <h2>Address:</h2>
+            <input type="hidden" th:field="*{address.id}"/>
+            <div class="input-group col-xs-8">
+                <label for="street">Street</label>
+                <input class="form-control" type="text" id="street" th:field="*{address.street}"
+                       th:required="${isCompany = 1} ? 'required' : ''"/>
+            </div>
+            <div class="input-group col-xs-8">
+                <label for="zip">Zip</label>
+                <input class="form-control" type="text" id="zip" th:field="*{address.zip}"
+                       th:required="${isCompany = 1} ? 'required' : ''"/>
+            </div>
+
+            <div class="input-group col-xs-8">
+                <label for="city">City</label>
+                <input class="form-control" type="text" id="city" th:field="*{address.city}"
+                       th:required="${isCompany = 1} ? 'required' : ''"/>
+            </div>
+
+            <div class="input-group col-xs-8">
+                <label for="state">State</label>
+                <input class="form-control" type="text" id="state" th:field="*{address.state}"
+                       th:required="${isCompany = 1} ? 'required' : ''"/>
+            </div>
+
+            <div class="input-group col-xs-8">
+                <label for="country">Country</label>
+                <input class="form-control" type="text" id="country" th:field="*{address.country}"
+                       th:required="${isCompany = 1} ? 'required' : ''"/>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <h2>Contacts:</h2>
+            <button id="idContactAdd" type="button" class="btn btn-info">Add row</button>
+            <button id="idContactRemove" type="button" class="btn btn-warning">Delete one row</button>
+            <button id="idContactRemoveAll" type="button" class="btn btn-danger">Delete all without first row</button>
+            <table id="tableContacts" class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Name
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Phone
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Email
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Fax
+                    </th>
+                </tr>
+                </thead>
+                <th:block th:each="c : ${client}">
+                    <tr>
+                        <input type="hidden" th:field="*{contact.id}"/>
+                        <td><input class="form-control" type="text" th:field="*{contact.name}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{contact.phone}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{contact.email}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{contact.fax}"/></td>
+                    </tr>
+                </th:block>
+            </table>
+            <br/>
+            <span class="formError" th:if="${#fields.hasErrors('contact.name')}"
+                  th:errors="*{contact.name}">Invalid name</span>
+            <span class="formError" th:if="${#fields.hasErrors('contact.phone')}"
+                  th:errors="*{contact.phone}">Invalid phone</span>
+            <span class="formError" th:if="${#fields.hasErrors('contact.email')}"
+                  th:errors="*{contact.email}">Invalid email</span>
+            <span class="formError" th:if="${#fields.hasErrors('contact.fax')}"
+                  th:errors="*{contact.fax}">Invalid fax</span>
+        </div>
+
+        <div class="table-responsive">
+            <h2>Shipping Addresses</h2>
+            <button id="idShippingAddressAdd" type="button" class="btn btn-info">Add row</button>
+            <button id="idShippingAddressRemove" type="button" class="btn btn-warning">Delete row</button>
+            <button id="idShippingRemoveAll" type="button" class="btn btn-danger">Delete all without first row</button>
+            <table id="tableShippingAddress" class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Street
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>ZIP
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>City
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>State
+                    </th>
+
+                    <th><a href="#">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>Country
+                    </th>
+                </tr>
+                </thead>
+                <th:block th:each="c : ${client}">
+                    <tr>
+                        <input type="hidden" th:field="*{shippingAddress.id}"/>
+                        <td><input class="form-control" type="text" th:field="*{shippingAddress.street}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{shippingAddress.zip}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{shippingAddress.city}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{shippingAddress.state}"/></td>
+                        <td><input class="form-control" type="text" th:field="*{shippingAddress.country}"/></td>
+                    </tr>
+                </th:block>
+                <!--              <th:block th:each="items : ${client.shippingAddressesAsList}">
+                              <tr>
+                                  <input type="hidden" th:field="*{shippingAddress.id}"/>
+                                  <td><input class="form-control" type="text" th:field="*{shippingAddress.street}"/></td>
+                                  <td><input class="form-control" type="text" th:field="*{shippingAddress.zip}"/></td>
+                                  <td><input class="form-control" type="text" th:field="*{shippingAddress.city}"/></td>
+                                  <td><input class="form-control" type="text" th:field="*{shippingAddress.state}"/></td>
+                                  <td><input class="form-control" type="text" th:field="*{shippingAddress.country}"/></td>
+                              </tr>
+                              </th:block>-->
+            </table>
+            <br/>
+            <span class="formError" th:if="${#fields.hasErrors('shippingAddress.street')}"
+                  th:errors="*{shippingAddress.street}">Invalid street</span>
+            <span class="formError" th:if="${#fields.hasErrors('shippingAddress.zip')}"
+                  th:errors="*{shippingAddress.zip}">Invalid zip</span>
+            <span class="formError" th:if="${#fields.hasErrors('shippingAddress.city')}"
+                  th:errors="*{shippingAddress.city}">Invalid city</span>
+            <span class="formError" th:if="${#fields.hasErrors('shippingAddress.state')}"
+                  th:errors="*{shippingAddress.state}">Invalid state</span>
+            <span class="formError" th:if="${#fields.hasErrors('shippingAddress.country')}"
+                  th:errors="*{shippingAddress.country}">Invalid country</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a onclick="goToPreviousPage()" type="button" class="btn btn-default">Cancel</a>
+    </div>
+</form>
+</body>
+<script type='text/javascript' src='../js/fadeOutInRegNo.js'></script>
+</html>

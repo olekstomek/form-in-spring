@@ -1,0 +1,39 @@
+.slimtable-paging-div {
+    padding-bottom: 5%;
+    margin-top: 5px;
+    display: inline-block;
+    width: 100%;
+}
+
+.slimtable-paging-seldiv {
+    display: inline;
+    float: right;
+}
+
+.slimtable-paging-select {
+    margin-right: 10px;
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    padding: 5px;
+}
+
+.slimtable-paging-btnsdiv {
+    display: inline-block;
+}
+
+.slimtable-page-btn {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    text-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.slimtable-page-btn.active {
+    background-color: #337ab7;
+    font-weight: bold;
+}

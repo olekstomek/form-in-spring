@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    <!--/*/ <th:block th:include="fragments/notification :: head"></th:block> /*/-->
+    <script type="text/javascript" src="/js/confirmDelete.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="/css/paging.css"/>
+</head>
+<br/> <br/>
+<body class="container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <a th:href="@{/create}" type="button" class="btn btn-primary btn-lg">Create</a>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <form th:object="${clients}" th:action="@{/}" method="get">
+                    <div class="input-group">
+                        <input type="text" name="search" id="search" th:value="${search}"
+                               class="form-control input-lg" placeholder="Search"/>
+                        <div class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="table-responsive">
+    <table id="table" class="table table-hover table-bordered table-stripped">
+        <thead class="thead-light">
+        <tr>
+            <th>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>Name
+            </th>
+            <th>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>Is Company?
+            </th>
+            <th>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <a>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>Contact
+            </th>
+            <th>
+            </th>
+        </tr>
+        </thead>
+        <th:block th:each="p : ${clients}">
+            <tr>
+                <td th:text="${p.name}"></td>
+                <td><input type="checkbox" name="active" th:checked="${p.isCompany}" onclick="return false"/></td>
+                <td>
+                    <p th:text="${p.contact.name}"></p>
+                    <p th:text="${p.contact.phone}"></p>
+                    <p th:text="${p.contact.email}"></p>
+                    <p th:text="${p.contact.fax}"></p>
+                </td>
+                <td>
+                    <a th:href="@{/delete/{id}(id=${p.id})}" type="button" class="btn btn-danger"
+                       data-toggle="confirm">Delete</a>
+                    <a th:href="@{/update/{id}(id=${p.id})}" type="button" class="btn btn-default">Edit</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+<div class="alert alert-info alert-dismissible" role="alert" th:if="${clients.isEmpty()}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    No data found. Repeat the data search or add data!
+</div>
+</body>
+</html>
